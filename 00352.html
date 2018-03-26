@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
+    <title>My First Map</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/3.23/esri/css/esri.css">
+    <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <script src="https://js.arcgis.com/3.23/"></script>
+    <script>
+        var map;
+        var MapZoom;
+        var lon;
+        var lat;
+        var MapBasemap;
+        var MapPoint;
+        function ShowMap()
+        {
+            require(["esri/map","dojo/dom","dojo/on","esri/geometry/Point","dojo/domReady!"],
+                function(Map,dom,on,Point)
+                {
+                    on(dom.byId("shuaxin"), "click",TOOLS);
+                    map = new Map("map");
+                    TOOLS();
+                    function TOOLS() {
+                        var MapZoom = document.getElementById("zoom").value;
+                        var lon = document.getElementById("jingdu").value;
+                        var lat = document.getElementById("weidu").value;
+                        var MapPoint = new Point(lon, lat);
+                        var MapBasemap = document.getElementById("ditu").value;
+                        map.setBasemap(MapBasemap);
+                        map.setZoom(MapZoom);
+                        map.centerAt(MapPoint);
+
+                    }
+                });
+        }
+    </script>
+</head>
+
+<body >
+
+<input id="zoom" type="text" value="" placeholder="请选择缩放级别" />
+<input id="jingdu" type="text" value="" placeholder="请输入地图经度" />
+<input id="weidu" type="text" value="" placeholder="请输入地图纬度" />
+<input id="ditu" type="text" value="" placeholder="请选择地图底图" />
+<input type="button" id="shuaxin" value="显示范围" class="submitButton"   />
+<input type="button" id="xianshi" value="显示地图" class="submitButton" onclick="ShowMap()"  />
+<div id="map"></div>
+</body>
+</html>
